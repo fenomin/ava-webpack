@@ -80,7 +80,7 @@ function runWebpack(config) {
 
 function runAva(emittedFiles, tap) {
     return new Promise(function (resolve, reject) {
-        exec('ava ' + (tap ? '--tap ' : '') + emittedFiles.join(' ') + ' --verbose', {},  function (err, stdout, stderr) {
+        exec('ava ' + (tap ? '--tap ' : '--verbose ') + emittedFiles.join(' '), {},  function (err, stdout, stderr) {
             var output = tap ? stdout : stderr;
 
             if(err) {
