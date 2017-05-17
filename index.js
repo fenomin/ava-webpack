@@ -51,12 +51,6 @@ function getWebpackConfig(config, fileHash, path) {
         },
         target: 'node',
         externals: [nodeExternals()],
-        plugins: [
-            new ProvidePlugin({
-                WebSocket: ['websocket', 'w3cwebsocket'],
-                WebsocketAppServer: 'websocket-server-ts'
-            }),
-        ],
         resolve: {
             extensions: ['.ts', '.tsx', '.js'],
             alias: {}
