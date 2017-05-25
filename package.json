@@ -1,6 +1,6 @@
 {
   "name": "ava-webpack",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Crude webpack enabled runner for AVA",
   "main": "index.js",
   "scripts": {},
@@ -27,7 +27,7 @@
     "webpack-node-externals": "^1.3.3"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
-    "webpack": "> 1.13.0 <= 2.1.0-beta.21"
+    "ava": "^0.19.1",
+    "webpack": "2.4.1"
   }
 }

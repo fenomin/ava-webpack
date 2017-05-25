@@ -50,19 +50,7 @@ function getWebpackConfig(config, fileHash, path) {
             path
         },
         target: 'node',
-        externals: [nodeExternals()],
-        resolve: {
-            extensions: ['.ts', '.tsx', '.js'],
-            alias: {}
-        },
-        module: {
-            loaders: [
-                {
-                    test: /\.tsx?$/,
-                    loader: 'ts-loader'
-                }
-            ]
-        }
+        externals: [nodeExternals()]
     });
 }
 
@@ -80,7 +68,8 @@ function runWebpack(config) {
 
 function runAva(emittedFiles, tap) {
     return new Promise(function (resolve, reject) {
-        exec('ava ' + (tap ? '--tap ' : '--verbose ') + emittedFiles.join(' '), {},  function (err, stdout, stderr) {
+        console.log('ava ' + (tap ? '--tap ' : '') + emittedFiles.join(' ') + ' --verbose');
+        exec('ava ' + (tap ? '--tap ' : '') + emittedFiles.join(' ') + ' --verbose', {},  function (err, stdout, stderr) {
             var output = tap ? stdout : stderr;
 
             if(err) {
@@ -111,7 +100,7 @@ function complete(output, isError, shouldClean) {
 function run(input, flags, showHelp) {
     var webpackConfigPath =  flags.webpackConfig || findWebpackConfig();
     var webpackConfigResolvedPath = webpackConfigPath && path.resolve(process.cwd(), webpackConfigPath);
-    var testDiscoveryPattern = input || '**/*.test.{js,jsx,ts,tsx}';
+    var testDiscoveryPattern = input || '**/*.ava.{js,jsx,ts,tsx}';
     var outDir = catalogForTest;
 
     var existingWebpackConfig = {};
@@ -119,13 +108,8 @@ function run(input, flags, showHelp) {
     var cleanOutput = !flags.debug || flags.clean;
 
     if(webpackConfigPath) {
-        try {
-            existingWebpackConfig = require(webpackConfigResolvedPath);
-            existingWebpackConfig = existingWebpackConfig.default || existingWebpackConfig;
-        }
-        catch(e) {
-            console.error("Webpack config not found. Using default.");
-        }
+        existingWebpackConfig = require(webpackConfigResolvedPath);
+        existingWebpackConfig = existingWebpackConfig.default || existingWebpackConfig;
     }
 
     var testFiles = getFiles(testDiscoveryPattern);

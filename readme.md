@@ -10,28 +10,24 @@ npm install ava-webpack --save-dev
 
 ## Usage example (almost as crude as the implementation - sorry)
 
-*webpack.config-test.js* (using [awesome-typescript-loader](https://github.com/s-panferov/awesome-typescript-loader))
+*webpack.config-test.js* (using [ts-loader](https://github.com/TypeStrong/ts-loader))
 
 ```
-var path = require('path');
+'use strict';
 
 module.exports = {
-	resolve: {
-		root: [
-			path.resolve(__dirname, 'apps'),
-			path.resolve(__dirname, 'common')
-		],
-		extensions: ['', '.ts', '.tsx', '.js']
-	},
-	devtool: 'eval',
-	module: {
-		loaders: [
-			{
-				test: /\.tsx?$/,
-				loader: 'awesome-typescript-loader'
-			}
-		]
-	}
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js'],
+        alias: {}
+    },
+    module: {
+        loaders: [
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader'
+            }
+        ]
+    }
 };
 
 ```
@@ -40,34 +36,20 @@ module.exports = {
 
 ```
 {
-	"dependencies": {
-		"babel-polyfill": "^6.9.1",
-	},
 	"devDependencies": {
 		"@types/enzyme": "^2.4.30",
-		"ava": "^0.16.0",
+		"ava": "^0.19.1",
 		"ava-webpack": "^1.0.6",
-		"awesome-typescript-loader": "2.0.2",
-		"babel-core": "^6.10.4",
-		"babel-preset-es2015": "^6.9.0",
-		"babel-preset-react": "^6.11.1",
+		"ts-loader": "2.0.3",
 		"enzyme": "^2.4.1",
 		"rimraf": "^2.5.3",
-		"tap-teamcity": "^1.2.0",
-		"typescript": "^2.0.0",
-		"webpack": "2.1.0-beta.20"
+		"typescript": "2.3.2",
+		"webpack": "2.4.1"
 	},
 	"scripts": {
-		"test": "ava-webpack --webpack-config ./webpack.config-test.js --polyfill babel-polyfill --clean",
-		"test-ci": "ava-webpack --webpack-config ./webpack.config-test.js --polyfill babel-polyfill --clean --tap | tap-teamcity"
+		"ava-test": "ava-webpack --webpack-config ./webpack.config-test.js"
 	},
-	"ava": {
-		"concurrency": 5,
-		"require": [
-			"babel-register"
-		],
-		"babel": "inherit"
-	}
+    "ava": "^0.19.1"
 }
 
 ```
