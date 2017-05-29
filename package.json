@@ -1,6 +1,6 @@
 {
   "name": "ava-webpack",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Crude webpack enabled runner for AVA",
   "main": "index.js",
   "scripts": {},
