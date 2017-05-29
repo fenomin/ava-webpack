@@ -66,9 +66,12 @@ function runWebpack(config) {
     });
 }
 
-function runAva(emittedFiles, tap) {
+function runAva(emittedFiles, tap, debug) {
     return new Promise(function (resolve, reject) {
-        console.log('ava ' + (tap ? '--tap ' : '') + emittedFiles.join(' ') + ' --verbose');
+        if (!!debug) {
+            console.log('ava ' + (tap ? '--tap ' : '') + emittedFiles.join(' ') + ' --verbose');
+        }
+
         exec('ava ' + (tap ? '--tap ' : '') + emittedFiles.join(' ') + ' --verbose', {},  function (err, stdout, stderr) {
             var output = tap ? stdout : stderr;
 
@@ -140,7 +143,7 @@ function run(input, flags, showHelp) {
                 console.log(stats.toString({ colors: true }));
             }
 
-            runAva(emittedFiles, flags.tap).then(
+            runAva(emittedFiles, flags.tap, flags.debug).then(
                 function(res) { return complete(res, false, cleanOutput); },
                 function(err) { return complete(err, true, cleanOutput); }
             )
