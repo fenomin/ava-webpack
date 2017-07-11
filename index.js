@@ -73,7 +73,7 @@ function runAva(emittedFiles, flags) {
         let ava = 'ava ' + emittedFiles.join(' ');
         ava += Object.keys(flags).some(item => item === 'verbose') ? ' --verbose' : '';
 
-        let tap = Object.keys(flags).filter(item => /\Atap/.test(item));
+        let tap = Object.keys(flags).filter(item => /tap/.test(item));
 
         if (tap.length > 0) {
             ava += ' --' + tap[0];
